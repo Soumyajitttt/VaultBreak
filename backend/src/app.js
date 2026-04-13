@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from "cookie-parser";
+import { clerkMiddleware } from '@clerk/express';
 
 
 const app= express();
@@ -12,6 +13,7 @@ app.use(cors({
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(clerkMiddleware());
 
 //routes
 import userRoutes from "./routes/user.routes.js";
