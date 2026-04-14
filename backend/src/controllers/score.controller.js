@@ -9,10 +9,6 @@ export const submitScore = async (req, res) => {
     const user = await User.findById(req.userId);
     if (!user) return res.status(404).json({ error: "User not found" });
 
-    // Score formula:
-    // Base: 1000 if won, 0 if lost
-    // Time bonus: timeLeft * 5
-    // Attempt bonus: attemptsLeft * 100
     const score = won
       ? Math.round(1000 + timeLeft * 5 + attemptsLeft * 100)
       : 0;
@@ -56,6 +52,17 @@ export const getLeaderboard = async (req, res) => {
       { $limit: 50 },
     ]);
     res.json(leaderboard);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+// GET /api/scores/played — get all game IDs the current user has already played
+export const getPlayedGameIds = async (req, res) => {
+  try {
+    const scores = await Score.find({ userId: req.userId }).select("gameId");
+    const gameIds = scores.map((s) => s.gameId.toString());
+    res.json(gameIds);
   } catch (err) {
     res.status(500).json({ error: "Server error" });
   }

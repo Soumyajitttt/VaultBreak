@@ -17,7 +17,6 @@ export default function CreateGame() {
     setError("");
     if (!word.trim() || !hint.trim()) return setError("Both fields are required.");
     if (word.trim().length < 2) return setError("Word must be at least 2 characters.");
-    if (/\s/.test(word.trim())) return setError("Word must be a single word with no spaces.");
 
     try {
       setLoading(true);
@@ -36,7 +35,7 @@ export default function CreateGame() {
     }
   };
 
-  const previewLetters = word.toUpperCase().replace(/[^A-Z]/g, "");
+  const previewLetters = word.toUpperCase().replace(/[^A-Z ]/g, "");
 
   return (
     <div className="min-h-screen flex items-center justify-center px-6 py-16">
@@ -119,25 +118,29 @@ export default function CreateGame() {
             {/* Letter preview */}
             {previewLetters.length > 0 && (
               <div className="mb-6 flex gap-2 flex-wrap">
-                {previewLetters.split("").map((_, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      width: 44,
-                      height: 52,
-                      border: "1px solid var(--vault-amber)",
-                      background: "var(--vault-surface)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontFamily: "var(--font-display)",
-                      fontSize: 20,
-                      color: "var(--vault-amber)",
-                    }}
-                  >
-                    ?
-                  </div>
-                ))}
+                {previewLetters.split("").map((char, i) =>
+                  char === " " ? (
+                    <div key={i} style={{ width: 24, height: 52 }} />
+                  ) : (
+                    <div
+                      key={i}
+                      style={{
+                        width: 44,
+                        height: 52,
+                        border: "1px solid var(--vault-amber)",
+                        background: "var(--vault-surface)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontFamily: "var(--font-display)",
+                        fontSize: 20,
+                        color: "var(--vault-amber)",
+                      }}
+                    >
+                      ?
+                    </div>
+                  )
+                )}
               </div>
             )}
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "@clerk/clerk-react";
+import { useAuth, useUser } from "@clerk/clerk-react";
 import axios from "axios";
 
 function GameCard({ game, index }) {
@@ -144,22 +144,35 @@ export default function BrowseGames() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const { getToken } = useAuth();
+  const { user } = useUser();
 
   useEffect(() => {
     (async () => {
       try {
         const token = await getToken();
-        const { data } = await axios.get("/api/games", {
-          headers: { Authorization: `Bearer ${token}` },
+        const headers = { Authorization: `Bearer ${token}` };
+
+        const [gamesRes, playedRes] = await Promise.all([
+          axios.get("/api/games", { headers }),
+          axios.get("/api/scores/played", { headers }),
+        ]);
+
+        const playedIds = new Set(playedRes.data);
+
+        const available = gamesRes.data.filter((g) => {
+          const isOwn = g.createdBy === user?.id;
+          const isPlayed = playedIds.has(g._id);
+          return !isOwn && !isPlayed;
         });
-        setGames(data);
+
+        setGames(available);
       } catch (err) {
         console.error(err);
       } finally {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [user]);
 
   const filtered = games.filter(
     (g) =>
@@ -181,7 +194,7 @@ export default function BrowseGames() {
             BROWSE GAMES
           </h1>
           <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--vault-muted)" }}>
-            {games.length} VAULTS LOCKED
+            {games.length} VAULTS AVAILABLE
           </span>
         </div>
       </div>
