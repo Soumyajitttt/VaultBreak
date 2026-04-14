@@ -93,7 +93,7 @@ export default function CreateGame() {
                 value={word}
                 onChange={(e) => setWord(e.target.value)}
                 placeholder="e.g. PYTHON"
-                maxLength={20}
+                maxLength={30}
                 style={{
                   width: "100%",
                   background: "var(--vault-surface)",
