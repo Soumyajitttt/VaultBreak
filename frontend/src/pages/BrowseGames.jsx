@@ -147,9 +147,9 @@ function GameCard({ game, index }) {
               )}
               {game.creatorName || "ANONYMOUS"}
             </div>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--vault-muted)" }}>
+            {/* <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--vault-muted)" }}>
               {game.wordLength} LTR
-            </span>
+            </span> */}
           </div>
 
           {/* Hint Section: Fixed height and Overflow control */}
