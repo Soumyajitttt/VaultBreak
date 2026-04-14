@@ -111,7 +111,7 @@ export default function CreateGame() {
                 onBlur={(e) => (e.target.style.borderColor = "var(--vault-border)")}
               />
               <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--vault-muted)", marginTop: 4 }}>
-                {word.replace(/\s/g, "").length} / 20 characters
+                {word.replace(/\s/g, "").length} / 30 characters
               </div>
             </div>
 

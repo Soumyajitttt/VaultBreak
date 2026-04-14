@@ -232,6 +232,52 @@ body::before {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────── */
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.daily-vault-card {
+  position: relative;
+  background: #0d0d12;
+  border: 1px solid rgba(255, 174, 0, 0.2);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* The scanning wave */
+.daily-vault-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 174, 0, 0.05) 50%,
+    transparent
+  );
+  animation: scan-line 3s infinite linear;
+  pointer-events: none;
+}
+
+/* The pixelated grid */
+.pixel-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 174, 0, 0.1) 1px, transparent 0);
+  background-size: 6px 6px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.daily-vault-card:hover {
+  border-color: var(--vault-amber);
+  box-shadow: 0 0 20px rgba(255, 174, 0, 0.05);
+}
+
 
 @layer base {
   ::selection {
