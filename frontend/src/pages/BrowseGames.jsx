@@ -163,8 +163,8 @@ export default function BrowseGames() {
 
   const filtered = games.filter(
     (g) =>
-      g.hint.toLowerCase().includes(search.toLowerCase()) ||
-      g.creatorName.toLowerCase().includes(search.toLowerCase())
+      g.hint?.toLowerCase().includes(search.toLowerCase()) ||
+      g.creatorName?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (

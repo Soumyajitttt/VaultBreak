@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { requireAuth } from "../middlewares/auth.middleware.js";
+import { requireAuth, syncUser } from "../middlewares/auth.middleware.js";
 import { createGame, getAllGames, getGameById } from "../controllers/game.controller.js";
 
 const router = Router();
 
-router.get("/", getAllGames);                        // public
-router.post("/", requireAuth, createGame);          // auth required
-router.get("/:id", requireAuth, getGameById);       // auth required (to get word)
+router.get("/", getAllGames);
+router.post("/", requireAuth, syncUser, createGame);        // ← added syncUser
+router.get("/:id", requireAuth, syncUser, getGameById);    // ← added syncUser
 
 export default router;
