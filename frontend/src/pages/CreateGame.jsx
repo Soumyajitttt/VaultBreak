@@ -22,7 +22,7 @@ export default function CreateGame() {
       setLoading(true);
       const token = await getToken();
       await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/games`,
+        "/api/games",
         { word: word.trim(), hint: hint.trim() },
         { headers: { Authorization: `Bearer ${token}` } }
       );

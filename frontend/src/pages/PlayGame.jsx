@@ -113,7 +113,7 @@ export default function PlayGame() {
     (async () => {
       try {
         const token = await getToken();
-        const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/games/${id}`, {
+        const { data } = await axios.get(`/api/games/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setGame(data);

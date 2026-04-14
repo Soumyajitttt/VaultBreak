@@ -210,6 +210,8 @@ function GameCard({ game, index }) {
   );
 }
 
+// ... (DailyPuzzleCard and GameCard components remain the same)
+
 export default function BrowseGames() {
   const [games, setGames] = useState([]);
   const [dailyGame, setDailyGame] = useState(null);
@@ -226,9 +228,9 @@ export default function BrowseGames() {
         const headers = { Authorization: `Bearer ${token}` };
 
         const [gamesRes, playedRes, dailyRes] = await Promise.all([
-          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/games`, { headers }),
-          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/scores/played`, { headers }),
-          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/games/daily`, { headers }),
+          axios.get("/api/games", { headers }),
+          axios.get("/api/scores/played", { headers }),
+          axios.get("/api/games/daily", { headers }),
         ]);
 
         const playedIds = new Set(playedRes.data);
@@ -272,14 +274,70 @@ export default function BrowseGames() {
         </div>
       </div>
 
-      {!loading && dailyGame && !dailyPlayed && (
+      {/* --- Updated Daily Section --- */}
+      {!loading && dailyGame && (
         <div className="mb-12">
           <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--vault-muted)", letterSpacing: "0.15em", marginBottom: 12 }}>
             // TODAY'S CHALLENGE
           </div>
-          <DailyPuzzleCard game={dailyGame} />
+          
+          {dailyPlayed ? (
+            /* Solved State Placeholder */
+            <div
+              style={{
+                background: "rgba(20, 20, 25, 0.5)",
+                border: "1px dashed var(--vault-border)",
+                padding: "28px 32px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: "120px",
+                position: "relative",
+                overflow: "hidden"
+              }}
+            >
+              <div style={{ textAlign: "center", zIndex: 10 }}>
+                <div style={{ 
+                  fontFamily: "var(--font-mono)", 
+                  fontSize: 14, 
+                  color: "var(--vault-amber)", 
+                  letterSpacing: "0.3em",
+                  marginBottom: 4
+                }}>
+                  VAULT_DECRYPTED
+                </div>
+                <div style={{ 
+                  fontFamily: "var(--font-mono)", 
+                  fontSize: 10, 
+                  color: "var(--vault-muted)",
+                  textTransform: "uppercase" 
+                }}>
+                  Return tomorrow for a new access code
+                </div>
+              </div>
+              {/* Subtle background text for effect */}
+              <div style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                fontSize: "80px",
+                fontFamily: "var(--font-display)",
+                color: "white",
+                opacity: 0.03,
+                whiteSpace: "nowrap",
+                pointerEvents: "none"
+              }}>
+                ACCESS GRANTED
+              </div>
+            </div>
+          ) : (
+            /* Active Daily Card */
+            <DailyPuzzleCard game={dailyGame} />
+          )}
         </div>
       )}
+      {/* --- End Daily Section --- */}
 
       <div className="mb-8">
         <div style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--vault-muted)", letterSpacing: "0.15em", marginBottom: 12 }}>

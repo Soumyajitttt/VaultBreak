@@ -10,7 +10,7 @@ export default function Leaderboard() {
   useEffect(() => {
     (async () => {
       try {
-        const { data: lb } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/scores/leaderboard`);
+        const { data: lb } = await axios.get("/api/scores/leaderboard");
         setData(lb);
       } catch (err) {
         console.error(err);
