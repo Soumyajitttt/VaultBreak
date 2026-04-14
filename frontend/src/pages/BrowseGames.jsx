@@ -226,9 +226,9 @@ export default function BrowseGames() {
         const headers = { Authorization: `Bearer ${token}` };
 
         const [gamesRes, playedRes, dailyRes] = await Promise.all([
-          axios.get("/api/games", { headers }),
-          axios.get("/api/scores/played", { headers }),
-          axios.get("/api/games/daily", { headers }),
+          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/games`, { headers }),
+          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/scores/played`, { headers }),
+          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/games/daily`, { headers }),
         ]);
 
         const playedIds = new Set(playedRes.data);
