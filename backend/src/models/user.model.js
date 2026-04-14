@@ -1,42 +1,14 @@
-import mongoose from 'mongoose';
-import { Schema } from 'mongoose';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import mongoose from "mongoose";
 
-const userSchema = new Schema({
-    fullname: {
-        type: String,
-        required: true
-    },
-    email: {    
-        type: String,
-        required: true,
-        unique: true,
-        lowercase: true
-    },
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-        lowercase: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
+const userSchema = new mongoose.Schema(
+  {
+    _id: { type: String }, // Clerk user ID
+    fullname: { type: String, required: true },
+    email: { type: String, required: true, unique: true, lowercase: true },
+    username: { type: String, required: true, unique: true, lowercase: true },
+    avatar: { type: String, default: "" },
+  },
+  { timestamps: true }
+);
 
-}, { timestamps: true });
-
-
-userSchema.pre("save", async function () {
-    if (!this.isModified("password")) return;
-
-    this.password = await bcrypt.hash(this.password, 10);
-});
-
-// Method to compare password for login
-userSchema.methods.isPasswordCorrect = async function(password){
-    return await bcrypt.compare(password, this.password)
-};
-
-export const User = mongoose.model('User', userSchema);
+export const User = mongoose.model("User", userSchema);
