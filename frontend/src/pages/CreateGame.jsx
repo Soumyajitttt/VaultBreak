@@ -156,7 +156,7 @@ export default function CreateGame() {
                   marginBottom: 8,
                 }}
               >
-                HINT / CLUE
+                HINT
               </label>
               <textarea
                 value={hint}

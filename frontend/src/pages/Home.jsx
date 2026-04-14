@@ -83,7 +83,7 @@ export default function Home() {
         </p>
 
         {/* Stats row */}
-        <div className="flex justify-center gap-12 mb-12">
+        {/* <div className="flex justify-center gap-12 mb-12">
           {[
             { label: "ATTEMPTS", value: "6" },
             { label: "TIME LIMIT", value: "2:00" },
@@ -94,7 +94,7 @@ export default function Home() {
               <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--vault-muted)", letterSpacing: "0.15em" }}>{label}</div>
             </div>
           ))}
-        </div>
+        </div> */}
 
         {/* CTA buttons */}
         <SignedIn>

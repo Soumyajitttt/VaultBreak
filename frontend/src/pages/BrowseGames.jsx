@@ -4,135 +4,144 @@ import { useAuth, useUser } from "@clerk/clerk-react";
 import axios from "axios";
 
 function GameCard({ game, index }) {
-  const blanks = Array(game.wordLength).fill("_");
-
   return (
     <Link
       to={`/play/${game._id}`}
       className="block group"
-      style={{ textDecoration: "none", animationDelay: `${index * 0.05}s`, opacity: 0, animation: "slide-up 0.4s ease forwards" }}
+      style={{ 
+        textDecoration: "none", 
+        animationDelay: `${index * 0.05}s`, 
+        opacity: 0, 
+        animation: "slide-up 0.4s ease forwards" 
+      }}
     >
       <div
+        className="transition-all duration-300 ease-out group-hover:-translate-y-1"
         style={{
           background: "var(--vault-card)",
           border: "1px solid var(--vault-border)",
-          padding: "24px",
-          transition: "all 0.25s",
+          minHeight: "260px", // Slightly taller to accommodate larger text
+          display: "flex",
+          flexDirection: "column",
           position: "relative",
           overflow: "hidden",
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.borderColor = "var(--vault-amber)";
           e.currentTarget.style.background = "var(--vault-surface)";
+          e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.4)";
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.borderColor = "var(--vault-border)";
           e.currentTarget.style.background = "var(--vault-card)";
+          e.currentTarget.style.boxShadow = "none";
         }}
       >
-        {/* Top bar accent */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 2,
-            background: "var(--vault-amber)",
-            transform: "scaleX(0)",
-            transformOrigin: "left",
-            transition: "transform 0.3s",
-          }}
-          className="group-hover:[transform:scaleX(1)]"
-        />
+        {/* Animated Top Border Accent */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-[var(--vault-amber)] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
-        {/* Word blanks */}
-        <div className="flex gap-2 mb-5 flex-wrap">
-          {blanks.map((_, i) => (
-            <div
-              key={i}
-              style={{
-                width: 32,
-                height: 38,
-                borderBottom: "2px solid var(--vault-amber)",
+        <div className="p-6 flex flex-col h-full flex-grow text-left">
+          
+          {/* Header: Creator Name (Left) & Meta (Right) */}
+          <div className="flex justify-between items-center mb-5">
+            <div 
+              style={{ 
+                fontFamily: "var(--font-mono)", 
+                fontSize: 11, 
+                color: "var(--vault-muted)",
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
-                fontFamily: "var(--font-display)",
-                fontSize: 18,
-                color: "var(--vault-muted)",
+                gap: "8px",
               }}
+              className="group-hover:text-white transition-colors duration-300"
             >
-              _
+              {game.creatorAvatar && (
+                <img 
+                  src={game.creatorAvatar} 
+                  alt="" 
+                  style={{ width: 20, height: 20, borderRadius: "50%", border: "1px solid var(--vault-border)" }} 
+                />
+              )}
+              {game.creatorName || "UNKNOWN"}
             </div>
-          ))}
-        </div>
-
-        {/* Hint */}
-        <p
-          style={{
-            fontFamily: "var(--font-body)",
-            fontSize: 14,
-            color: "var(--vault-text)",
-            marginBottom: 16,
-            lineHeight: 1.6,
-          }}
-        >
-          <span style={{ color: "var(--vault-amber)", fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.1em" }}>HINT: </span>
-          {game.hint}
-        </p>
-
-        {/* Footer */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            {game.creatorAvatar ? (
-              <img src={game.creatorAvatar} alt="" style={{ width: 22, height: 22, borderRadius: "50%", border: "1px solid var(--vault-border)" }} />
-            ) : (
-              <div
-                style={{
-                  width: 22,
-                  height: 22,
-                  borderRadius: "50%",
-                  background: "var(--vault-amber)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 10,
-                  color: "#0a0a0f",
-                  fontWeight: 700,
-                }}
-              >
-                {game.creatorName?.[0]?.toUpperCase()}
-              </div>
-            )}
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--vault-muted)" }}>{game.creatorName}</span>
+            
           </div>
-          <div className="flex items-center gap-3">
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--vault-muted)" }}>
-              {game.wordLength} LETTERS
+
+          {/* Hint Section: Centered & Larger Text */}
+          <div 
+            className="relative p-6 mb-6 flex-grow flex flex-col items-center justify-center transition-colors duration-300 text-center"
+            style={{
+              background: "rgba(0, 0, 0, 0.2)",
+              border: "1px solid var(--vault-border)",
+            }}
+          >
+            {/* Tech Corner Accents */}
+            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[var(--vault-amber)] opacity-50" />
+            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[var(--vault-amber)] opacity-50" />
+
+            <span 
+              style={{ 
+                color: "var(--vault-amber)", 
+                fontFamily: "var(--font-mono)", 
+                fontSize: 10, 
+                letterSpacing: "0.2em",
+                display: "block",
+                marginBottom: 12,
+              }}
+              className="animate-pulse"
+            >
+              &gt; TARGET_HINT
             </span>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--vault-muted)" }}>
-              {game.playCount} PLAYS
+            <p
+              style={{
+                fontFamily: "var(--font-body)",
+                fontSize: 22, // Significantly increased from 15px
+                color: "var(--vault-text)",
+                lineHeight: 1.4,
+                margin: 0,
+                display: "-webkit-box",
+                WebkitLineClamp: 3, // Still caps at 3 lines to prevent breaking layout
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden"
+              }}
+              className="group-hover:text-white transition-colors duration-300"
+            >
+              {game.hint}
+            </p>
+          </div>
+
+          {/* Start Button (Left Aligned) */}
+          <div
+            className="relative overflow-hidden inline-flex items-center justify-center self-start"
+            style={{
+              border: "1px solid var(--vault-border)",
+              padding: "8px 28px",
+              fontFamily: "var(--font-display)",
+              fontSize: 14,
+              letterSpacing: "0.15em",
+              color: "var(--vault-amber)",
+              transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              background: "transparent",
+              marginTop: "auto",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "var(--vault-amber)";
+              e.currentTarget.style.letterSpacing = "0.3em";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "var(--vault-border)";
+              e.currentTarget.style.letterSpacing = "0.15em";
+            }}
+          >
+            <div className="absolute inset-0 bg-[var(--vault-amber)] -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out z-0" />
+            
+            <span className="relative z-10 group-hover:text-[#0a0a0f] transition-colors duration-300 font-bold">
+              INITIATE
             </span>
           </div>
-        </div>
-
-        {/* Play arrow */}
-        <div
-          style={{
-            position: "absolute",
-            right: 24,
-            top: "50%",
-            transform: "translateY(-50%) translateX(10px)",
-            fontFamily: "var(--font-display)",
-            fontSize: 24,
-            color: "var(--vault-amber)",
-            opacity: 0,
-            transition: "all 0.2s",
-          }}
-          className="group-hover:opacity-100 group-hover:[transform:translateY(-50%)_translateX(0)]"
-        >
-          →
+          
         </div>
       </div>
     </Link>

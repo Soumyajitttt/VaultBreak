@@ -189,8 +189,10 @@ export default function PlayGame() {
       setRevealTrigger(letter);
       setTimeout(() => setRevealTrigger(null), 400);
 
-      // Check win
-      const allRevealed = word.split("").every((l) => newGuessed.has(l));
+      // Check win: Remove spaces before validating if all letters are revealed
+      const lettersOnly = word.replace(/\s/g, "").split("");
+      const allRevealed = lettersOnly.every((l) => newGuessed.has(l));
+      
       if (allRevealed) {
         endGame(true, newGuessed, wrongGuesses);
       }
@@ -295,37 +297,41 @@ export default function PlayGame() {
         <span style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "var(--vault-text)" }}>{game?.hint}</span>
       </div>
 
-      {/* Word display */}
+      {/* Word display - Now broken into distinct words to prevent bad wrapping */}
       <div
         className={shakeTrigger ? "animate-shake" : ""}
         key={shakeTrigger}
-        style={{ display: "flex", gap: 10, justifyContent: "center", marginBottom: 48, flexWrap: "wrap" }}
+        style={{ display: "flex", gap: 24, justifyContent: "center", marginBottom: 48, flexWrap: "wrap" }}
       >
-        {word.split("").map((letter, i) => {
-          const revealed = guessedLetters.has(letter);
-          return (
-            <div
-              key={i}
-              style={{
-                width: 52,
-                height: 64,
-                border: revealed ? "1px solid var(--vault-amber)" : "none",
-                borderBottom: "2px solid " + (revealed ? "var(--vault-amber)" : "var(--vault-muted)"),
-                background: revealed ? "rgba(245,166,35,0.08)" : "transparent",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontFamily: "var(--font-display)",
-                fontSize: 32,
-                color: "var(--vault-amber)",
-                transition: "all 0.2s",
-                animation: revealed && revealTrigger === letter ? "reveal-letter 0.35s ease forwards" : "none",
-              }}
-            >
-              {revealed ? letter : ""}
-            </div>
-          );
-        })}
+        {word.split(" ").map((wordSegment, wordIndex) => (
+          <div key={wordIndex} style={{ display: "flex", gap: 10 }}>
+            {wordSegment.split("").map((letter, i) => {
+              const revealed = guessedLetters.has(letter);
+              return (
+                <div
+                  key={i}
+                  style={{
+                    width: 52,
+                    height: 64,
+                    border: revealed ? "1px solid var(--vault-amber)" : "none",
+                    borderBottom: "2px solid " + (revealed ? "var(--vault-amber)" : "var(--vault-muted)"),
+                    background: revealed ? "rgba(245,166,35,0.08)" : "transparent",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontFamily: "var(--font-display)",
+                    fontSize: 32,
+                    color: "var(--vault-amber)",
+                    transition: "all 0.2s",
+                    animation: revealed && revealTrigger === letter ? "reveal-letter 0.35s ease forwards" : "none",
+                  }}
+                >
+                  {revealed ? letter : ""}
+                </div>
+              );
+            })}
+          </div>
+        ))}
       </div>
 
       {/* Keyboard */}

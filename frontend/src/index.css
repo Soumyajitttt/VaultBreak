@@ -1,4 +1,3 @@
-
 @import "tailwindcss";
 
 :root {
@@ -96,3 +95,147 @@ body::before {
 .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
 .animate-shake { animation: shake 0.4s ease; }
 .animate-reveal { animation: reveal-letter 0.35s ease forwards; }
+
+/* ─── Clerk UI overrides ─────────────────────────────────────────────────── */
+
+/* Title */
+.cl-headerTitle {
+  color: #f5a623 !important;
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-size: 30px !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* Subtitle */
+.cl-headerSubtitle {
+  color: #666680 !important;
+  font-size: 13px !important;
+}
+
+/* Primary button — kill the purple */
+.cl-formButtonPrimary {
+  background: #f5a623 !important;
+  background-color: #f5a623 !important;
+  color: #0a0a0f !important;
+  font-family: 'Syne', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  border: none !important;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+  transition: background 0.2s, box-shadow 0.2s !important;
+}
+.cl-formButtonPrimary:hover {
+  background: #c4841a !important;
+  background-color: #c4841a !important;
+  box-shadow: 0 0 16px rgba(245,166,35,0.35) !important;
+}
+
+/* Social button (Google) */
+.cl-socialButtonsBlockButton {
+  background: #111118 !important;
+  border: 1px solid #2a2a3a !important;
+  border-radius: 6px !important;
+  color: #e8e8f0 !important;
+}
+.cl-socialButtonsBlockButton:hover {
+  border-color: #f5a623 !important;
+  background: #16161f !important;
+}
+.cl-socialButtonsBlockButtonText {
+  color: #e8e8f0 !important;
+  font-weight: 600 !important;
+}
+
+/* Inputs */
+.cl-formFieldInput {
+  background: #0a0a0f !important;
+  border: 1px solid #2a2a3a !important;
+  color: #e8e8f0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  border-radius: 6px !important;
+}
+.cl-formFieldInput:focus {
+  border-color: #f5a623 !important;
+  box-shadow: 0 0 0 2px rgba(245,166,35,0.15) !important;
+  outline: none !important;
+}
+
+/* Labels */
+.cl-formFieldLabel {
+  color: #e8e8f0 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* Badge ("Last used") */
+.cl-badge {
+  background: rgba(245,166,35,0.12) !important;
+  border: 1px solid rgba(245,166,35,0.3) !important;
+  color: #f5a623 !important;
+  border-radius: 4px !important;
+  font-size: 11px !important;
+}
+
+/* Card */
+.cl-card {
+  background: #16161f !important;
+  border: 1px solid #2a2a3a !important;
+  border-radius: 12px !important;
+  box-shadow: 0 0 40px rgba(245,166,35,0.08), 0 20px 60px rgba(0,0,0,0.6) !important;
+}
+
+/* Footer */
+.cl-footer {
+  background: #111118 !important;
+  border-top: 1px solid #2a2a3a !important;
+}
+.cl-footerActionLink {
+  color: #f5a623 !important;
+  font-weight: 600 !important;
+}
+.cl-footerActionText {
+  color: #666680 !important;
+}
+
+/* Divider */
+.cl-dividerLine {
+  background: #2a2a3a !important;
+}
+.cl-dividerText {
+  color: #666680 !important;
+}
+
+/* OTP digits */
+.cl-otpCodeFieldInput {
+  background: #0a0a0f !important;
+  border: 1px solid #2a2a3a !important;
+  color: #f5a623 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  border-radius: 6px !important;
+}
+
+/* Internal "Secured by Clerk" */
+.cl-internal-b3fm6y {
+  color: #444458 !important;
+}
+
+/* Error text */
+.cl-formFieldErrorText {
+  color: #ff3b3b !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+@layer base {
+  ::selection {
+    background-color: rgb(255, 136, 0);
+    color: rgb(0, 0, 0);              
+  }
+}

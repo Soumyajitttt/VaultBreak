@@ -23,33 +23,35 @@ export default function Navbar() {
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-3 group">
-          <div
-            style={{
-              width: 36,
-              height: 36,
-              background: "var(--vault-amber)",
-              clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "transform 0.3s",
-            }}
-            className="group-hover:scale-110"
-          >
-            <span style={{ fontSize: 16, fontFamily: "var(--font-display)", color: "#0a0a0f" }}>V</span>
+        <Link to="/" className="flex items-center gap-4 group">
+          {/* Hexagonal Icon Container */}
+          <div className="relative flex items-center justify-center w-9 h-9 transition-all duration-500 ease-out group-hover:rotate-6">
+            {/* Hexagon Background */}
+            <div 
+              className="absolute inset-0 transition-colors duration-300"
+              style={{
+                background: "linear-gradient(135deg, var(--vault-amber) 0%, #d4a017 100%)",
+                clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+              }}
+            />
+            {/* The Lettering */}
+            <span className="relative z-10 text-slate-950 font-bold text-sm tracking-tighter">
+              V
+            </span>
           </div>
-          <span
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: 22,
-              letterSpacing: "0.12em",
-              color: "var(--vault-amber)",
-            }}
-            className="animate-flicker"
-          >
-            VAULTBREAK
-          </span>
+
+          {/* Typography Section */}
+          <div className="flex flex-col leading-none">
+            <span 
+              className="text-xl tracking-[0.15em] font-display transition-all duration-300 group-hover:text-white"
+              style={{ color: "var(--vault-amber)" }}
+            >
+              <span className="font-black">VAULT</span>
+              <span className="font-light opacity-90">BREAK</span>
+            </span>
+            {/* Subtle underline accent */}
+            <div className="h-[1px] w-0 bg-amber-400/50 transition-all duration-500 group-hover:w-full mt-1" />
+          </div>
         </Link>
 
         {/* Nav Links */}
