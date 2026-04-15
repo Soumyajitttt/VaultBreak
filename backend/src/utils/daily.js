@@ -30,7 +30,7 @@ export const generateDailyPuzzle = async () => {
     return existing;
   }
 
-  const prompt = `Generate a daily word puzzle for a word-guessing game.
+  const prompt = `Generate a daily word puzzle (moderate to hard level) for a word-guessing game.
 
 Respond ONLY with valid JSON.
 No markdown. No explanation.
