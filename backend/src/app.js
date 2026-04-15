@@ -10,7 +10,7 @@ import scoreRoutes from "./routes/score.routes.js";
 const app = express();
 
 app.use(cors({
-  origin: "*",
+  origin: "https://vault-break.vercel.app/",
   credentials: true,
 }));
 
